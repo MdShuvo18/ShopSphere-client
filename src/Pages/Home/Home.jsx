@@ -1,3 +1,4 @@
+import AllProducts from "../AllProducts";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 
@@ -5,7 +6,7 @@ const Home = () => {
     return (
         <div>
             <Navbar></Navbar>
-            this is Home
+            <AllProducts></AllProducts>
             <Footer></Footer>
         </div>
     );

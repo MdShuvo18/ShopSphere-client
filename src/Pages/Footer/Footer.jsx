@@ -3,9 +3,9 @@
 const Footer = () => {
     return (
         <footer>
-        <div className="footer p-10 bg-neutral text-neutral-content">
+        <div className="footer p-10 bg-gray-600 text-neutral-content">
             <div>
-               <img className="w-[100px] h-[100px] rounded-full" src="/public/Yellow and Black Modern Minimalist Online Shop Logo.png" alt="" />
+               <img className="w-[100px] h-[100px] rounded-full" src="/Yellow and Black Modern Minimalist Online Shop Logo.png" alt="" />
                 <p>ShopSphere Ltd.<br />Providing reliable tech since 2010</p>
             </div>
             <div>
