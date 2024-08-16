@@ -24,7 +24,7 @@ const AllProducts = () => {
         }
     })
     // console.log(typeof (items.count))
-    const itemsPerPage = 10;
+    const itemsPerPage = 6;
     const totalPages = Math.ceil(items.count / itemsPerPage);
     const pages = []
     for (let i = 0; i < totalPages; i++) {
@@ -32,6 +32,22 @@ const AllProducts = () => {
     }
     // console.log(pages)
     const [currentPage, setCurrentPage] = useState(1)
+    // handle prev
+    const handlePrev = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+
+    // handle next
+    const handleNext = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+    // console.log(currentPage)
+
+
     return (
         <div>
             <div className="grid grid-cols-3 gap-5 justify-items-center">
@@ -52,17 +68,22 @@ const AllProducts = () => {
             </div>
             <div className="text-center">
                 <p>Current Page : {currentPage}</p>
+                <button onClick={handlePrev} className="btn btn-success">Prev</button>
                 {
                     pages.map(page => <div onClick={() => setCurrentPage(page)} key={page} className="join gap-2">
-                        <input
-                            className="join-item btn btn-outline btn-square ml-2"
+                        {/* <input
+                            className={`join-item btn btn-outline btn-square ml-2 ${currentPage===page && "text-orange-200"}`}
                             type="radio"
                             name="options"
                             aria-label={page}
-                        />
+                        /> */}
+                        <button className={`join-item btn btn-outline btn-square ml-2 ${currentPage === page && "text-orange-600 bg-amber-200"}`}>
+                            {page}
+                        </button>
 
                     </div>)
                 }
+                <button onClick={handleNext} className="btn btn-success ml-2">Next</button>
             </div>
         </div>
     );
