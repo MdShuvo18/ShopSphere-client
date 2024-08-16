@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../Shared/useAxiosPublic";
+import { useState } from "react";
 
 
 
@@ -22,7 +23,7 @@ const AllProducts = () => {
             return res.data
         }
     })
-    console.log(typeof (items.count))
+    // console.log(typeof (items.count))
     const itemsPerPage = 10;
     const totalPages = Math.ceil(items.count / itemsPerPage);
     const pages = []
@@ -30,6 +31,7 @@ const AllProducts = () => {
         pages.push(i + 1)
     }
     // console.log(pages)
+    const [currentPage, setCurrentPage] = useState(1)
     return (
         <div>
             <div className="grid grid-cols-3 gap-5 justify-items-center">
@@ -49,10 +51,11 @@ const AllProducts = () => {
                 ))}
             </div>
             <div className="text-center">
+                <p>Current Page : {currentPage}</p>
                 {
-                    pages.map(page => <div key={page} className="join gap-2">
+                    pages.map(page => <div onClick={() => setCurrentPage(page)} key={page} className="join gap-2">
                         <input
-                            className="join-item btn btn-square"
+                            className="join-item btn btn-outline btn-square ml-2"
                             type="radio"
                             name="options"
                             aria-label={page}
