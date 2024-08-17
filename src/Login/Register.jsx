@@ -81,7 +81,7 @@ const Register = () => {
         <div>
             <Navbar></Navbar>
             <div>
-                <div className="hero  bg-base-200">
+                <div className="hero  bg-base-300">
                     <div className="hero-content flex-col">
                         <div className="text-center">
                             <h1 className="text-5xl text-purple-800 font-bold animate__animated  animate__swing">Please Register</h1>
@@ -134,6 +134,7 @@ const Register = () => {
                                 </div>
                             </form>
 
+
                             <p className="text-center p-2">Already have an account? <Link to='/login' className="text-blue-700">Login</Link></p>
                             {
                                 register && <p className="text-lg text-center text-red-700">{register}</p>
@@ -149,7 +150,7 @@ const Register = () => {
 
             </div>
             <Footer></Footer>
-     
+
 
         </div>
     );

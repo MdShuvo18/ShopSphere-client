@@ -41,19 +41,7 @@ const Login = () => {
             })
     }
 
-    const handleGithubSignIn = () => {
-        // e.preventDefault()
-        signInWithPopup(auth, gitHubProvider)
-            .then(() => {
-                toast.success("Github Login successfully")
-                window.location.href = '/';
-                // const user = result.user;
-                // console.log(user);
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
-    }
+   
 
     const hadnleLogin = (e) => {
         e.preventDefault()
@@ -146,7 +134,7 @@ const Login = () => {
                             <button className="btn btn-outline btn-success">Login</button>
                         </div>
                         <button onClick={handleGoogleSignIn} className="btn btn-outline btn-primary">SignIn With Google <FcGoogle /></button>
-                        <button onClick={handleGithubSignIn} className="btn btn-outline btn-secondary">SignIn With Github<BsGithub /></button>
+                      
                     </form>
                     {
                         logUser && <p className="text-lg text-center text-red-700">{logUser}</p>
