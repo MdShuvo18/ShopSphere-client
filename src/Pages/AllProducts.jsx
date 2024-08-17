@@ -1,19 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../Shared/useAxiosPublic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
 
 const AllProducts = () => {
     const axiosPublic = useAxiosPublic()
-    const { data: products = [], } = useQuery({
-        queryKey: ['products'],
+    const [search, setSearch] = useState('')
+    // const [products, setProducts] = useState()
+    const [currentPage, setCurrentPage] = useState(1)
+    const [searchItems, setSearchItems] = useState()
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/products?page=${currentPage}&size=${itemsPerPage}&search=${search}`)
+    //         .then(res => res.json())
+    //         .then(data => setProducts(data))
+    // }, [currentPage, search])
+    // console.log(products)
+    const { data: products = [],refetch } = useQuery({
+        queryKey: ['products', search],
         queryFn: async () => {
-            const res = await axiosPublic.get('/products')
-            // console.log(res.data)
+            const res = await axiosPublic.get(`/products?page=${currentPage}&size=${itemsPerPage}&search=${search}`)
+            console.log(res.data)
             return res.data
+            
         }
+    
     })
     const { data: items = [], } = useQuery({
         queryKey: ['items'],
@@ -23,15 +35,30 @@ const AllProducts = () => {
             return res.data
         }
     })
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/search?search=${search}`)
+            .then(res => res.json())
+            .then(data => setSearchItems(data))
+    }, [search])
+    // const { data: searchItems = [] } = useQuery({
+    //     queryKey: ['searchItems'],
+    //     queryFn: async () => {
+    //         const res = await axiosPublic.get(`/search?search=${search}`)
+    //         console.log(res.data)
+    //         return res.data
+    //     }
+    // })
+    // console.log(searchItems)
     // console.log(typeof (items.count))
     const itemsPerPage = 6;
     const totalPages = Math.ceil(items.count / itemsPerPage);
     const pages = []
-    for (let i = 0; i < totalPages; i++) {
-        pages.push(i + 1)
+    for (let i = 1; i < totalPages; i++) {
+        pages.push(i)
     }
     // console.log(pages)
-    const [currentPage, setCurrentPage] = useState(1)
+
     // handle prev
     const handlePrev = () => {
         if (currentPage > 1) {
@@ -46,10 +73,27 @@ const AllProducts = () => {
         }
     }
     // console.log(currentPage)
+    // searching related
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+        const searchItem = e.target.search.value
+        // console.log(searchItem)
+        setSearch(searchItem)
 
 
+        // fetch new data here
+    }
     return (
-        <div>
+        <div className="space-y-5">
+            <form onSubmit={handleSearch}>
+                <input
+                    name="search"
+                    type="text"
+                    placeholder="search here"
+                    className="input input-bordered input-md w-full max-w-xs" />
+                <input type="submit" value="Search" className="btn ml-2" />
+            </form>
             <div className="grid grid-cols-3 gap-5 justify-items-center">
                 {products.map((product) => (
                     <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-xl">
@@ -67,7 +111,7 @@ const AllProducts = () => {
                 ))}
             </div>
             <div className="text-center">
-                <p>Current Page : {currentPage}</p>
+                {/* <p>Current Page : {currentPage}</p> */}
                 <button onClick={handlePrev} className="btn btn-success">Prev</button>
                 {
                     pages.map(page => <div onClick={() => setCurrentPage(page)} key={page} className="join gap-2">
